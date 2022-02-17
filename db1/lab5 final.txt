@@ -1,0 +1,101 @@
+create table user (id integer primary key autoincrement, name text, status text);
+insert into user (name, status) values ("Arya", "A girl is Arya Stark of Winterfell, and I'm going home.");
+insert into user (name, status) values ("Jon", "And all was black and still, and black and cold, and black and dead, and black.");
+insert into user (name, status) values ("Sansa", "I did what I had to do to survive, my lady. But I am a Stark, I will always be a Stark.");
+insert into user (name, status) values ("Daenerys", "Dracarys");
+insert into user (name, status) values ("Tyrion", "A mind needs books like a sword needs a whetstone.");
+insert into user (name, status) values ("Jorah", "The common people pray for rain, healthy children, and a summer that never ends. It is no matter to them if the high lords play their game of thrones, so long as they are left in peace. They never are.");
+insert into user (name, status) values ("Samwell", "Seems a bit greedy for one man to have so many wives. Wouldn't two or three be enough for him?");
+
+create table hobbies (id integer primary key autoincrement, name text);
+insert into hobbies (name) values ("Swords");
+insert into hobbies (name) values ("Gold");
+insert into hobbies (name) values ("Books");
+insert into hobbies (name) values ("Dragons");
+
+create table userhobbies (userid integer, hobbyid integer);
+insert into userhobbies (userid, hobbyid) values (1, 1);
+insert into userhobbies (userid, hobbyid) values (2, 1);
+insert into userhobbies (userid, hobbyid) values (3, 2);
+insert into userhobbies (userid, hobbyid) values (3, 3);
+insert into userhobbies (userid, hobbyid) values (4, 1);
+insert into userhobbies (userid, hobbyid) values (4, 4);
+insert into userhobbies (userid, hobbyid) values (5, 2);
+insert into userhobbies (userid, hobbyid) values (5, 3);
+insert into userhobbies (userid, hobbyid) values (5, 4);
+insert into userhobbies (userid, hobbyid) values (6, 1);
+insert into userhobbies (userid, hobbyid) values (6, 2);
+insert into userhobbies (userid, hobbyid) values (7, 3);
+
+create table friends (id integer primary key autoincrement, userid integer, friendid integer);
+insert into friends (userid, friendid) values (1, 2);
+insert into friends (userid, friendid) values (1, 3);
+insert into friends (userid, friendid) values (2, 1);
+insert into friends (userid, friendid) values (2, 3);
+insert into friends (userid, friendid) values (2, 4);
+insert into friends (userid, friendid) values (2, 5);
+insert into friends (userid, friendid) values (2, 7);
+insert into friends (userid, friendid) values (3, 1);
+insert into friends (userid, friendid) values (3, 2);
+insert into friends (userid, friendid) values (4, 2);
+insert into friends (userid, friendid) values (4, 5);
+insert into friends (userid, friendid) values (4, 6);
+insert into friends (userid, friendid) values (5, 2);
+insert into friends (userid, friendid) values (5, 4);
+insert into friends (userid, friendid) values (5, 6);
+insert into friends (userid, friendid) values (6, 4);
+insert into friends (userid, friendid) values (6, 5);
+insert into friends (userid, friendid) values (7, 2);
+
+/* Användaröversikt */
+select user.name, status as Status, count(*) as Friends from user
+join friends
+on user.id = friends.userid
+group by user.id
+order by user.name;
+    
+/* Hobbyöversikt */
+select hobbies.name, count(*) from hobbies
+join userhobbies
+on userhobbies.hobbyid = hobbies.id
+group by hobbies.id;
+
+/* Vänlista */
+select user.name as Friend_list from user
+join friends
+on friends.friendid = user.id
+where friends.userid = 3;
+
+/* vänräknare */
+select user.name as Friend_counter, count(*)
+from user
+join friends
+on friends.userid = user.id
+where user.id in (select friends.friendid from friends where friends.userid = 3)
+group by user.id;
+
+/* Vänligast */
+select user.name as Friendliest, count(*) as amount_of_friends from user
+join friends
+on friends.userid = user.id
+group by user.id
+order by amount_of_friends desc
+limit 1;
+
+/* Arya's Hobbykompisar */
+select user.name as Hobby_friends from user
+join userhobbies
+on user.id = userhobbies.userid and user.id <> 1
+where userhobbies.hobbyid in (select userhobbies.hobbyid from userhobbies where userhobbies.userid = 1);
+
+/* vänförslag  */
+select distinct user.name as suggested_friends from user
+join friends
+on user.id = friends.friendid and user.id <> 6
+where friends.userid in (select friends.friendid from friends where friends.userid = 6) and friends.friendid not in (select friends.friendid from friends where friends.userid = 6);
+    
+/* här tas Jon bort ur user-tabellen */
+delete from user where user.id = 2;
+
+/* visar lista över users för att visa att Jon är borta */
+select user.name from user;

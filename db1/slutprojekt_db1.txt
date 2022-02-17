@@ -1,0 +1,163 @@
+create table recipe (id integer primary key autoincrement, name text, tag text, time integer, difficulty integer);
+insert into recipe (name, tag, time, difficulty) values ("Pasta Bolognese", "casual", 30, 3);
+insert into recipe (name, tag, time, difficulty) values ("Warm spiced cauliflower and chickpea salad", "Valentine", 30, 4);
+insert into recipe (name, tag, time, difficulty) values ("Mushroom soup", "Winter", 30, 2);
+insert into recipe (name, tag, time, difficulty) values ("Loaf", "St Patrick's day", 30, 2);
+insert into recipe (name, tag, time, difficulty) values ("Lamb", "Easter", 120, 4);
+insert into recipe (name, tag, time, difficulty) values ("Broccoli soup", "light", 10, 1);
+insert into recipe (name, tag, time, difficulty) values ("Torta pasquale", "Easter", 60, 5);
+
+create table ingredients (id integer primary key autoincrement, name text, nutrition integer);
+insert into ingredients (name, nutrition) values ("Olive oil", 1);
+insert into ingredients (name, nutrition) values ("Beef mince", 1);
+insert into ingredients (name, nutrition) values ("Onion", 1);
+insert into ingredients (name, nutrition) values ("Carrot", 1);
+insert into ingredients (name, nutrition) values ("Garlic clove", 1);
+insert into ingredients (name, nutrition) values ("Rosemary", 1);
+insert into ingredients (name, nutrition) values ("Tomato", 1);
+insert into ingredients (name, nutrition) values ("Oregano", 1);
+insert into ingredients (name, nutrition) values ("Spaghetti", 1);
+insert into ingredients (name, nutrition) values ("Parmesan", 1);
+insert into ingredients (name, nutrition) values ("Cinamon", 1);
+insert into ingredients (name, nutrition) values ("Cauliflower", 1);
+insert into ingredients (name, nutrition) values ("Chickpeas", 1);
+insert into ingredients (name, nutrition) values ("Salt", 1);
+insert into ingredients (name, nutrition) values ("Pomegranate", 1);
+insert into ingredients (name, nutrition) values ("Butter", 1);
+insert into ingredients (name, nutrition) values ("Chestnut mushrooms", 1);
+insert into ingredients (name, nutrition) values ("Fluor", 1);
+insert into ingredients (name, nutrition) values ("Milk", 1);
+insert into ingredients (name, nutrition) values ("Pepper", 1);
+insert into ingredients (name, nutrition) values ("Sugar", 1);
+insert into ingredients (name, nutrition) values ("Bicarbonate of soda", 1);
+insert into ingredients (name, nutrition) values ("Lamb", 1);
+insert into ingredients (name, nutrition) values ("Camomille", 1);
+insert into ingredients (name, nutrition) values ("Lemon", 1);
+insert into ingredients (name, nutrition) values ("Honey", 1);
+insert into ingredients (name, nutrition) values ("Water", 1);
+insert into ingredients (name, nutrition) values ("Broccoli", 1);
+insert into ingredients (name, nutrition) values ("Cream", 1);
+insert into ingredients (name, nutrition) values ("Nutmeg", 1);
+insert into ingredients (name, nutrition) values ("Egg", 1);
+insert into ingredients (name, nutrition) values ("Spinach", 1);
+insert into ingredients (name, nutrition) values ("Dandelion", 1);
+insert into ingredients (name, nutrition) values ("Cheese", 1);
+
+create table recipeIngredient (id integer primary key autoincrement, recipeid integer, ingredientid integer);
+insert into recipeIngredient (recipeid, ingredientid) values (1, 1);
+insert into recipeIngredient (recipeid, ingredientid) values (1, 2);
+insert into recipeIngredient (recipeid, ingredientid) values (1, 3);
+insert into recipeIngredient (recipeid, ingredientid) values (1, 4);
+insert into recipeIngredient (recipeid, ingredientid) values (1, 5);
+insert into recipeIngredient (recipeid, ingredientid) values (1, 6);
+insert into recipeIngredient (recipeid, ingredientid) values (1, 7);
+insert into recipeIngredient (recipeid, ingredientid) values (1, 8);
+insert into recipeIngredient (recipeid, ingredientid) values (1, 9);
+insert into recipeIngredient (recipeid, ingredientid) values (1, 10);
+insert into recipeIngredient (recipeid, ingredientid) values (2, 1);
+insert into recipeIngredient (recipeid, ingredientid) values (2, 11);
+insert into recipeIngredient (recipeid, ingredientid) values (2, 12);
+insert into recipeIngredient (recipeid, ingredientid) values (2, 13);
+insert into recipeIngredient (recipeid, ingredientid) values (2, 7);
+insert into recipeIngredient (recipeid, ingredientid) values (2, 14);
+insert into recipeIngredient (recipeid, ingredientid) values (2, 15); 
+insert into recipeIngredient (recipeid, ingredientid) values (3, 16);
+insert into recipeIngredient (recipeid, ingredientid) values (3, 3);
+insert into recipeIngredient (recipeid, ingredientid) values (3, 5);
+insert into recipeIngredient (recipeid, ingredientid) values (3, 17);
+insert into recipeIngredient (recipeid, ingredientid) values (3, 18);
+insert into recipeIngredient (recipeid, ingredientid) values (3, 19);
+insert into recipeIngredient (recipeid, ingredientid) values (3, 20);
+insert into recipeIngredient (recipeid, ingredientid) values (3, 7);
+insert into recipeIngredient (recipeid, ingredientid) values (4, 18);
+insert into recipeIngredient (recipeid, ingredientid) values (4, 14);
+insert into recipeIngredient (recipeid, ingredientid) values (4, 21);
+insert into recipeIngredient (recipeid, ingredientid) values (4, 22);
+insert into recipeIngredient (recipeid, ingredientid) values (4, 19);
+insert into recipeIngredient (recipeid, ingredientid) values (5, 23); 
+insert into recipeIngredient (recipeid, ingredientid) values (5, 24);
+insert into recipeIngredient (recipeid, ingredientid) values (5, 6); 
+insert into recipeIngredient (recipeid, ingredientid) values (5, 8);
+insert into recipeIngredient (recipeid, ingredientid) values (5, 20);
+insert into recipeIngredient (recipeid, ingredientid) values (5, 25);
+insert into recipeIngredient (recipeid, ingredientid) values (5, 26);
+insert into recipeIngredient (recipeid, ingredientid) values (5, 1);
+insert into recipeIngredient (recipeid, ingredientid) values (5, 27);
+insert into recipeIngredient (recipeid, ingredientid) values (6, 28);
+insert into recipeIngredient (recipeid, ingredientid) values (6, 29);
+insert into recipeIngredient (recipeid, ingredientid) values (6, 3);
+insert into recipeIngredient (recipeid, ingredientid) values (6, 30);
+insert into recipeIngredient (recipeid, ingredientid) values (6, 20);
+insert into recipeIngredient (recipeid, ingredientid) values (6, 31);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 29);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 18);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 31);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 32);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 33);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 1);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 3);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 34);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 7);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 20);
+insert into recipeIngredient (recipeid, ingredientid) values (7, 10);
+
+create table user (id integer primary key autoincrement, name text, mail text);
+insert into user (name, mail) values ("Jonny Snow", "jonny.snow@mail.com");
+insert into user (name, mail) values ("Samwell Thistle", "samwell.thistle@mail.com");
+insert into user (name, mail) values ("Arya Strong", "arya.strong@mail.com");
+insert into user (name, mail) values ("Sansa Strong", "sansa.strong@mail.com");
+insert into user (name, mail) values ("Tyson Lannis", "tyson.lannis@mail.com");
+insert into user (name, mail) values ("Jonah Mormont", "jonah.mormont@mail.com");
+insert into user (name, mail) values ("Carlos Oak", "carlos.oak@mail.com");
+
+create table favorites (recipe_id integer, user_id integer);
+insert into favorites (recipe_id, user_id) values (1, 1);
+insert into favorites (recipe_id, user_id) values (1, 3);
+insert into favorites (recipe_id, user_id) values (1, 4);
+insert into favorites (recipe_id, user_id) values (1, 6);
+insert into favorites (recipe_id, user_id) values (1, 7);
+insert into favorites (recipe_id, user_id) values (2, 1);
+insert into favorites (recipe_id, user_id) values (2, 5);
+insert into favorites (recipe_id, user_id) values (2, 6);
+insert into favorites (recipe_id, user_id) values (3, 1);
+insert into favorites (recipe_id, user_id) values (3, 2); 
+insert into favorites (recipe_id, user_id) values (3, 7);
+insert into favorites (recipe_id, user_id) values (4, 3);
+insert into favorites (recipe_id, user_id) values (4, 4);
+insert into favorites (recipe_id, user_id) values (5, 1);
+insert into favorites (recipe_id, user_id) values (5, 5);
+insert into favorites (recipe_id, user_id) values (6, 2);
+insert into favorites (recipe_id, user_id) values (7, 3);
+insert into favorites (recipe_id, user_id) values (7, 6);
+
+/**
+Här listas recept som har tomat som ingrediens
+*/
+select name from recipe 
+join recipeIngredient
+on recipe.id = recipeIngredient.recipeid and recipeIngredient.ingredientid = 7;
+
+/**
+Här listas de olika recept som finns och hur många ingredienser
+*/
+select name, count(*) as AmountOfIngredients from recipe 
+join recipeIngredient 
+on recipe.id = recipeIngredient.recipeid
+group by recipe.id
+order by AmountOfIngredients desc;
+
+/**
+Här listas recept som är taggad som julmat (winter)
+*/
+select name from recipe
+where tag = "Winter";
+
+/**
+Här listas de tre användare som har flest favoritmarkerade recept
+*/
+select name, count(*) as AmountOfFavorites from user
+join favorites
+on user.id = favorites.user_id
+group by user.id
+order by AmountofFavorites desc
+limit 3;

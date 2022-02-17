@@ -1,0 +1,134 @@
+use lab4;
+
+# Uppgift 1
+
+# Departments
+ALTER TABLE departments
+# Nanngivning av referensintegretitesvillkor
+ADD CONSTRAINT fk_department_managers 
+FOREIGN KEY (manager) REFERENCES employees(id)
+ON UPDATE CASCADE
+ON DELETE restrict;
+
+# Projects
+ALTER TABLE projects
+ADD CONSTRAINT fk_project_supervisor 
+FOREIGN KEY (supervisor) REFERENCES employees(id)
+# Om den anställda tas bort kan det fortfarande vara bra att veta vem som var projektets ledare.
+ON UPDATE CASCADE
+ON DELETE RESTRICT;
+
+# Project_members
+ALTER TABLE project_members
+ADD CONSTRAINT fk_projectmember
+FOREIGN KEY (e_id) REFERENCES employees(id)
+ON UPDATE CASCADE
+ON DELETE RESTRICT,
+ADD CONSTRAINT fk_project
+FOREIGN KEY (p_id) REFERENCES projects (id)
+ON UPDATE CASCADE
+ON DELETE CASCADE;
+
+
+
+# Uppgift 7
+
+drop view if exists retirement_status;
+drop function if exists calc_emp_age;
+drop function if exists calc_retirement_status;
+
+create view retirement_status as
+select e.title, e.first_name, e.last_name, calc_emp_age(e.birth_date) as age, e.birth_date, d.department,
+calc_retirement_status(e.birth_date) as retirement_status from employees as e
+join departments as d on d.id = e.department
+where calc_emp_age(birth_date) >= 55;
+
+select * from retirement_status;
+
+select d.department from employees as e
+join departments as d on e.department = d.id;
+
+delimiter //
+create function calc_retirement_status(birthDate Date)
+returns text
+no sql
+begin
+	set @retDate = (date_add(birthDate, interval 65 year));
+    set @yearsLeft = (select timestampdiff(year, current_Date(), @retDate));
+    set @returnText = (case
+			when @yearsLeft < 0 or calc_emp_age(birthDate) >= 65 then "Retired"
+            when @yearsLeft = 0 then "Up for retirement"
+			when @yearsLeft >= 5 then "more than 5 years"
+			when @yearsLeft < 5 then concat(@yearsLeft, " years left")
+			else "Other status"
+		end);
+	return @returnText;
+end //
+delimiter ;
+
+select first_name, calc_retirement_status(birth_date) as ret_status from employees;
+
+delimiter //
+create function calc_emp_age(birthDate Date)
+returns int
+no sql
+begin
+	set @empAge = (timestampdiff(year, birthDate, current_Date()));
+    return @empAge;
+end //
+delimiter ;
+
+
+
+# Uppgift 9
+
+drop table if exists total_salary;
+drop trigger if exists salary_trigger_insert;
+drop trigger if exists salary_trigger_update;
+
+create table total_salary(id INT PRIMARY KEY AUTO_INCREMENT, salary_sum int, last_update datetime);
+insert into total_salary (salary_sum, last_update) values ((select sum(salary) from employees), now());
+
+select * from total_salary;
+
+delimiter //
+create trigger salary_trigger_insert
+after insert
+on employees
+for each row
+begin
+	update total_salary set salary_sum = salary_sum + NEW.salary;
+    update total_salary set last_update = now();
+end //
+create trigger salary_trigger_update
+after update
+on employees
+for each row
+begin
+	if NEW.salary >= OLD.salary then
+		update total_salary set salary_sum = salary_sum + (NEW.salary - OLD.salary);
+	else 
+		update total_salary set salary_sum = salary_sum - (OLD.salary - NEW.salary);
+	end if;
+	update total_salary set last_update = now();
+end //
+delimiter ;
+
+SET SQL_SAFE_UPDATES = 0;
+insert into employees (title, first_name, last_name, login, department,
+birth_date, email, salary, phone_work, start_date, phone_home, phone_mobile, hr_notes) values
+('Ms', 'user', 'new', 'newuser1', 7, '1972-08-21', 'newuser1@ifeng.com', 30000, '760-02-0962',
+'2011-07-23', null, '734-91-2778', null);
+SET SQL_SAFE_UPDATES = 1;
+
+select * from total_salary;
+update employees set salary = 30000 where id = last_insert_id();
+
+insert into employees (title, first_name, last_name, login, department,
+birth_date, email, salary, phone_work, start_date, phone_home, phone_mobile, hr_notes) values
+('Ms', 'user2', 'new2', 'newuser2', 7, '1972-08-21', 'newuser2@ifeng.com', 35000, '760-02-0962',
+'2011-07-23', null, '734-91-2778', null);
+SET SQL_SAFE_UPDATES = 1;
+
+select * from total_salary;
+update employees set salary = 38000 where id = last_insert_id();
